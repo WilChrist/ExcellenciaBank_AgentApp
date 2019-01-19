@@ -1,0 +1,196 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="title">
+        #{msg.agentDashboard}
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="section no-pad-bot" id="index-banner">
+            <h1 class="header center red-text">#{msg.agentDashboard}</h1><br/>
+            <div class="row">
+                <div class="col s12 grey lighten-4">
+                    <div class="col s12 m12 l3">
+                        <ul class="collection with-header col s12 m6 l12">
+                            <li class="collection-header"><b>
+                                #{msg.agencyInfos}</b></li>
+                            <li class="collection-item"><b>#{msg.agcyName} : </b>#{login.agent.agency.name}</li>
+                            <li class="collection-item"><b>#{msg.agcyEmail} : </b>#{login.agent.agency.email}</li>
+                            <li class="collection-item"><b>#{msg.agcyTel} : </b>#{login.agent.agency.phoneNumber}</li>
+                            <li class="collection-item"><b>#{msg.agcyLocation} : </b>#{login.agent.agency.location}</li>
+                        </ul>
+                        <ul class="collection with-header col s12 m6 l12">
+                            <li class="collection-header"><b>
+                                #{msg.adminInfos}</b></li>
+                            <li class="collection-item avatar"
+                                style="padding: 10px 20px;margin: 0;border-bottom: 1px solid #e0e0e0;">
+                                <h:panelGroup rendered="#{login.isWellUpdated}">
+                                    <img src="https://loremflickr.com/320/240/girl?random=#{login.agent.agency.administrator.pk}"
+                                         width="50" height="50"
+                                         alt="Administrator Avatar"
+                                         style="position: relative;margin-right: 10px;margin-bottom: 30px;float: left;"
+                                         class="circle materialboxed"
+                                         data-caption="A picture of #{login.agent.agency.administrator.firstName} #{login.agent.agency.administrator.lastName}"
+                                         onload="M.toast({html: 'Client Well Update'})"
+                                    />
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not login.isWellUpdated}">
+                                    <img src="https://loremflickr.com/320/240/girl?random=#{login.agent.agency.administrator.pk}"
+                                         width="50" height="50"
+                                         alt="Administrator Avatar"
+                                         style="position: relative;margin-right: 10px;margin-bottom: 30px;float: left;"
+                                         class="circle materialboxed"
+                                         data-caption="A picture of #{login.agent.agency.administrator.firstName} #{login.agent.agency.administrator.lastName}"
+
+                                    />
+                                </h:panelGroup>
+
+                                <p>
+                                    #{login.agent.agency.administrator.firstName } #{login.agent.agency.administrator.lastName }
+                                    <br/>
+                                    #{login.agent.agency.administrator.email }
+                                </p>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col s12 m8 l6 "><h5><b>#{msg.mngClients}</b></h5>
+                        <ui:repeat var="mc" value="#{login.agent.agency.clients}">
+                            <div class="col s12 m6 l4">
+                                <div class="card small">
+                                    <div class="card-image">
+                                        <img src="https://loremflickr.com/960/720/boy,girl?random=#{mc.pk}"/>
+                                        <span class="card-title">#{mc.firstName} #{mc.lastName}</span>
+                                    </div>
+                                    <div class="card-content">
+                                        <p> #{mc.email} <br/> #{mc.phoneNumber}</p>
+                                    </div>
+                                    <div class="card-action center">
+                                        <!-- Modal Trigger -->
+                                        <a class="waves-effect waves-light btn modal-trigger"
+                                           href="#modal#{mc.pk}">#{msg.viewClient} <i
+                                                class="material-icons left">pageview</i></a>
+                                        <!--<button data-target="#modal#{mc.pk}" class="btn modal-trigger">View <i class="material-icons left">pageview</i></button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                    <div class="col s12 m4 l3">
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>
+                                #{msg.myColleagues}</b></li>
+                            <ui:repeat var="mcc" value="#{login.agent.agency.agents}">
+                                <li class="collection-item avatar"
+                                    style="padding: 10px 20px;margin: 0;border-bottom: 1px solid #e0e0e0; display:#{mcc.email==login.agent.email ? 'none' : 'list-item'};">
+                                    <img src="https://loremflickr.com/320/240/girl?random=#{mcc.pk}" width="50"
+                                         height="50"
+                                         alt="Administrator Avatar"
+                                         style="position: relative;margin-right: 20px;margin-bottom: 30px;float: left;"
+                                         class="circle materialboxed"
+                                         data-caption="A picture of #{mcc.firstName} #{mcc.lastName}"
+                                    />
+
+                                    <p>
+                                        #{mcc.firstName } #{mcc.lastName }
+                                        <br/>
+                                        #{mcc.email }
+                                    </p>
+                                </li>
+
+
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <br/><br/>
+
+        </div>
+        <div class="container">
+            <div class="section" id="apps">
+                <div class="row">
+                    <ui:repeat var="mc" value="#{login.agent.agency.clients}">
+                        <!-- Modal Structure -->
+                        <div id="modal#{mc.pk}" class="modal modal-fixed-footer medium">
+                            <div class="modal-content">
+                                <div class="card horizontal medium">
+                                    <div class="card-image">
+                                        <img src="https://loremflickr.com/960/720/boy,girl?random=#{mc.pk}"/>
+                                        <span class="card-title">#{mc.firstName} #{mc.lastName}</span>
+                                    </div>
+                                    <div class="card-stacked">
+                                        <div class="card-content">
+                                            <ul class="collapsible expandable">
+                                                <li class="active">
+                                                    <div class="collapsible-header"><i
+                                                            class="material-icons">account_box</i>#{msg.clientInfos}
+                                                    </div>
+                                                    <div class="collapsible-body">
+                                                        <span>
+                                                            <b>#{msg.agcyEmail} : </b>#{mc.email}<br/>
+                                                            <b>#{msg.agcyTel} : </b>#{mc.phoneNumber}<br/>
+                                                            <b>#{msg.birthdate} : </b>#{mc.birthdate}<br/>
+                                                            <b>#{msg.lastConnexion} : </b>#{mc.updateDateTime}<br/>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="collapsible-header"><i
+                                                            class="material-icons">account_balance_wallet</i>#{msg.clientAccountInfos}
+                                                    </div>
+                                                    <div class="collapsible-body">
+                                                        <span>
+                                                            <b>#{msg.rib} : </b>#{mc.account.rib}<br/>
+                                                            <b>#{msg.balance} : </b>#{mc.account.balance}<br/>
+                                                            <b>#{msg.numberOfTransfers} : </b>#{fn:length(mc.account.transfers)}
+                                                            <br/>
+                                                            <b>#{msg.numberOfRefills} : </b>#{fn:length(mc.account.refills)}
+                                                            <br/>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-action">
+                                            <h:form>
+                                                <h:commandLink action="#{login.showUpdateClientForm}"
+                                                               value="#{msg.updateClient}">
+                                                    <f:param name="clientpk" value="#{mc.pk}"/>
+                                                </h:commandLink>
+                                            </h:form>
+                                            <h:form>
+                                                <h:commandLink action="#{login.showDeleteClientForm}"
+                                                               value="#{msg.delete}">
+                                                    <f:param name="clientpk" value="#{mc.pk}"/>
+                                                </h:commandLink>
+                                            </h:form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                            </div>
+                        </div>
+                    </ui:repeat>
+
+                </div>
+
+            </div>
+            <br/><br/>
+        </div>
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red" href="newclient.xhtml">
+                <i class="large material-icons">add</i>
+            </a>
+        </div>
+    </ui:define>
+</ui:composition>

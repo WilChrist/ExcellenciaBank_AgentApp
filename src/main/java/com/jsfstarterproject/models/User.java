@@ -1,62 +1,54 @@
 package com.jsfstarterproject.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
-public class User {
-    int id;
-    private String nom;
-    private String prenom;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public abstract class User {
+    private Long pk;
+
+    private String firstName;
+    private String lastName;
+
     private String email;
+    private String phoneNumber;
+
+    private String login;
+
     private String password;
+
     private Date birthdate;
 
-    private Role role=new Role(0,"Guest","A non registered user");
 
-    public User() {
+    private Date createDateTime;
+
+
+    private Date updateDateTime;
+
+    public Long getPk() {
+        return pk;
     }
 
-    public User(int id, String nom, String prenom, String email, String password, Date birthdate) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.password = password;
-        this.birthdate = birthdate;
+    public void setPk(Long pk) {
+        this.pk = pk;
     }
 
-    public User(int id, String nom, String prenom, String email, String password, Date birthdate, Role role) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.password = password;
-        this.birthdate = birthdate;
-        this.role = role;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public int getId() {
-        return id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        prenom = prenom;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -65,6 +57,22 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -83,24 +91,20 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public Role getRole() {
-        return role;
+    public Date getCreateDateTime() {
+        return createDateTime;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setCreateDateTime(Date createDateTime) {
+        this.createDateTime = createDateTime;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", birthdate=" + birthdate +
-                ", role=" + role +
-                '}';
+    public Date getUpdateDateTime() {
+        return updateDateTime;
     }
+
+    public void setUpdateDateTime(Date updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+
 }

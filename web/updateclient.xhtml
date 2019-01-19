@@ -1,0 +1,120 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+
+    <ui:define name="title">
+        #{msg.agentDashboard}
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div class="section no-pad-bot" id="index-banner">
+            <h1 class="header center red-text">#{msg.agentDashboard}</h1><br/>
+            <div class="row">
+                <div class="col s12 grey lighten-4">
+                    <div class="col s12 m12 l3">
+                        <ul class="collection with-header col s12 m6 l12">
+                            <li class="collection-header"><b>
+                                #{msg.agencyInfos}</b></li>
+                            <li class="collection-item"><b>#{msg.agcyName} : </b>#{login.agent.agency.name}</li>
+                            <li class="collection-item"><b>#{msg.agcyEmail} : </b>#{login.agent.agency.email}</li>
+                            <li class="collection-item"><b>#{msg.agcyTel} : </b>#{login.agent.agency.phoneNumber}</li>
+                            <li class="collection-item"><b>#{msg.agcyLocation} : </b>#{login.agent.agency.location}</li>
+                        </ul>
+                        <ul class="collection with-header col s12 m6 l12">
+                            <li class="collection-header"><b>
+                                #{msg.adminInfos}</b></li>
+                            <li class="collection-item avatar"
+                                style="padding: 10px 20px;margin: 0;border-bottom: 1px solid #e0e0e0;">
+                                <img src="https://loremflickr.com/320/240/girl?random=#{login.agent.agency.administrator.pk}"
+                                     width="50" height="50"
+                                     alt="Administrator Avatar"
+                                     style="position: relative;margin-right: 10px;margin-bottom: 30px;float: left;"
+                                     class="circle materialboxed"
+                                     data-caption="A picture of #{login.agent.agency.administrator.firstName} #{login.agent.agency.administrator.lastName}"
+                                />
+
+
+                                <p>
+                                    #{login.agent.agency.administrator.firstName } #{login.agent.agency.administrator.lastName }
+                                    <br/>
+                                    #{login.agent.agency.administrator.email }
+                                </p>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col s12 m8 l6 white"><h5><b>#{msg.updateClientInfos}</b></h5>
+                        <h:form>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <h:inputText id="firstName" value="#{login.client.firstName}"
+                                                 styleClass="validate"/>
+                                    <label for="firstName">#{msg.formFN}</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <h:inputText id="lastName" value="#{login.client.lastName}" styleClass="validate"/>
+                                    <label for="lastName">#{msg.formLN}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">phone</i>
+                                    <h:inputText id="tel" value="#{login.client.phoneNumber}" styleClass="validate"/>
+                                    <label for="tel">#{msg.agcyTel}</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <h:inputText id="birthdate" value="#{login.client.birthdate}"
+                                                 styleClass="validate datepicker">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </h:inputText>
+                                    <label for="birthdate">#{msg.birthdate}</label>
+                                </div>
+                            </div>
+
+                            <h:commandLink action="#{login.updateClient}" value="#{msg.updateClient}" styleClass="btn"/>
+                        </h:form>
+                    </div>
+                    <div class="col s12 m4 l3">
+                        <ul class="collection with-header">
+                            <li class="collection-header"><b>
+                                #{msg.myColleagues}</b></li>
+                            <ui:repeat var="mcc" value="#{login.agent.agency.agents}">
+                                <li class="collection-item avatar"
+                                    style="padding: 10px 20px;margin: 0;border-bottom: 1px solid #e0e0e0; display:#{mcc.email==login.agent.email ? 'none' : 'list-item'};">
+                                    <img src="https://loremflickr.com/320/240/girl?random=#{mcc.pk}" width="50"
+                                         height="50"
+                                         alt="Administrator Avatar"
+                                         style="position: relative;margin-right: 20px;margin-bottom: 30px;float: left;"
+                                         class="circle materialboxed"
+                                         data-caption="A picture of #{mcc.firstName} #{mcc.lastName}"
+                                    />
+
+                                    <p>
+                                        #{mcc.firstName } #{mcc.lastName }
+                                        <br/>
+                                        #{mcc.email }
+                                    </p>
+                                </li>
+
+
+                            </ui:repeat>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+            <br/><br/>
+
+        </div>
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red" href="newclient.xhtml">
+                <i class="large material-icons">add</i>
+            </a>
+        </div>
+    </ui:define>
+</ui:composition>

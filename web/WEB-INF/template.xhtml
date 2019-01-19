@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" content="NotYetDefined"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -30,30 +30,75 @@
     <ui:insert name="head"/>
 </h:head>
 <h:body>
+    <!-- Materialize core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+    <h:outputScript name="materialize/js/materialize.min.js"/>
+    <h:outputScript name="materialize/js/jquery-3.3.1.min.js"/>
+    <h:outputScript name="materialize/js/init.js"/>
+
     <ui:insert name="body"/>
 
     <nav role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" href="index.xhtml" class="brand-logo">#{msg.appname}</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="login.xhtml"><i class="material-icons">account_box</i> Login</a></li>
-                <li class="input-field"><a style="margin: 1em;">
-                    <h:form>
-                            <h:selectOneMenu value="#{language.localeCode}" onchange="submit()"
-                                             valueChangeListener="#{language.countryLocaleCodeChanged}">
-                                <f:selectItems value="#{language.countriesInMap}"/>
-                            </h:selectOneMenu>
-                    </h:form></a>
+        <div class="nav-wrapper container"><a id="logo-container" href="index.xhtml"
+                                              class="brand-logo"><img class="materialboxed" width="90" height="70"
+                                                                      src="image/agentAppLogo.png"
+                                                                      alt="#{msg.appname}"/></a>
+            <ul class="right hide-on-med-and-down" style="width: 35%">
+                <li><a href="#{empty token ? 'login.xhtml' : 'agent.xhtml'}" style="float: left;">
+
+                    <i class="material-icons"
+                       style="float: left;">account_box</i>#{empty token ? "Login" : login.agent.firstName}</a>
+                </li>
+
+
+                <li style="display:#{empty token ? 'none' : 'list-item'};">
+                    <a href="#">
+                        <i class="material-icons" style="float: left;">settings_power</i>
+                        <h:form>
+
+                            <h:commandLink style="width: 35%;"
+                                           action="#{login.logout}" value="Logout"/>
+                        </h:form>
+                    </a>
+                </li>
+
+
+                <li class="input-field">
+                    <h:form style="margin: 1em;">
+                        <h:selectOneMenu value="#{language.localeCode}" onchange="submit()"
+                                         valueChangeListener="#{language.countryLocaleCodeChanged}"
+                                         style="display:inline; float:left;">
+                            <f:selectItems value="#{language.countriesInMap}"/>
+                        </h:selectOneMenu>
+                    </h:form>
                 </li>
             </ul>
 
             <ul id="nav-mobile" class="sidenav">
-                <li><a href="login.xhtml"><i class="material-icons">account_box</i> Login</a></li>
+                <li>
+                    <a href="login.xhtml">
+                        <i class="material-icons">account_box</i>
+                        Login
+                    </a>
+                </li>
+                <li style="display:#{empty token ? 'none' : 'list-item'};">
+                    <h:form>
+
+                        <h:commandLink styleClass="red-text"
+                                       action="#{login.logout}" value="Logout"/>
+                    </h:form>
+                    <i class="material-icons" style="float: left;">settings_power</i>
+                </li>
+
                 <li class="input-field">
                     <a><h:form>
-                            <h:selectOneMenu value="#{language.localeCode}" onchange="submit()"
-                                             valueChangeListener="#{language.countryLocaleCodeChanged}">
-                                <f:selectItems value="#{language.countriesInMap}"/>
-                            </h:selectOneMenu>
+                        <h:selectOneMenu value="#{language.localeCode}" onchange="submit()"
+                                         valueChangeListener="#{language.countryLocaleCodeChanged}"
+                                         style="display: inline">
+                            <f:selectItems value="#{language.countriesInMap}"/>
+                        </h:selectOneMenu>
                     </h:form></a>
                 </li>
             </ul>
@@ -89,14 +134,8 @@
             </div>
         </div>
     </footer>
-    <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <!-- Materialize core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script type="application/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
 
-    <h:outputScript name="materialize/js/materialize.min.js"/>
-    <h:outputScript name="materialize/js/jquery-3.3.1.min.js"/>
-    <h:outputScript name="materialize/js/init.js"/>
 </h:body>
 
 </html>
